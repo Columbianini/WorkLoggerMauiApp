@@ -6,26 +6,23 @@
              x:DataType="viewmodel:ManualTaskViewModel"
              x:Class="AdnWorkLog.View.MainPage"
              Title="Work Loggers">
-    <ScrollView>
+    <ScrollView Margin="10">
         <RefreshView>
-            <CollectionView ItemsSource="{Binding ManualTasks}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:ManualTask">
-                        <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems>
-                                        <SwipeItem Text="Delete" 
-                                           BackgroundColor="Red"/>
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Grid ColumnDefinitions="1*,3*">
-                                    <Label Grid.Column="0" Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" HorizontalOptions="Start"/>
-                                    <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center"/>
-                                </Grid>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Grid RowDefinitions="40, *" RowSpacing="10">
+                <Button Grid.Row="0" Text="Create New Task"/>
+                <CollectionView Grid.Row="1" ItemsSource="{Binding ManualTasks}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:ManualTask">
+                            <Grid ColumnDefinitions="10*,30*,4*,4*">
+                                <Label Grid.Column="0" Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" HorizontalOptions="Start"/>
+                                <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center"/>
+                                <Button Grid.Column="2" Text="Delete"/>
+                                <Button Grid.Column="3" Text="Edit"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </RefreshView>
     </ScrollView>
 </ContentPage>
