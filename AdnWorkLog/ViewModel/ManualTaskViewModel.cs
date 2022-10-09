@@ -49,9 +49,9 @@ namespace AdnWorkLog.ViewModel
         }
 
         [RelayCommand]
-        public void EditManualTaskById(int Id)
+        async Task CheckManualTaskById(int Id)
         {
-            Debug.WriteLine("Please Implement the Part to Edit the Manual Task: check whether it will go");
+            await Shell.Current.GoToAsync($"{nameof(DetailManualLog)}?Id={Id}");
         }
 
     }
