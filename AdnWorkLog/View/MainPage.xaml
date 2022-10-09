@@ -16,8 +16,13 @@
                             <Grid ColumnDefinitions="10*,30*,4*,4*">
                                 <Label Grid.Column="0" Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" HorizontalOptions="Start"/>
                                 <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center"/>
-                                <Button Grid.Column="2" Text="Delete"/>
-                                <Button Grid.Column="3" Text="Edit"/>
+                                <Button Grid.Column="2" Text="Delete" 
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=DeleteManualTaskByIdCommand}"
+                                        CommandParameter="{Binding Id}"/>
+                                <Button Grid.Column="3" Text="Edit"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=EditManualTaskByIdCommand}"
+                                        CommandParameter="{Binding Id}"
+                                        />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

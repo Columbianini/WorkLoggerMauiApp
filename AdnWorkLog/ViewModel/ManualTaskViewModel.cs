@@ -1,9 +1,11 @@
 ﻿using AdnWorkLog.Model;
+using AdnWorkLog.View;
 //using Android.OS;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -32,9 +34,18 @@ namespace AdnWorkLog.ViewModel
 
         // TODO: Add a SwipeView with Delete/Edit button https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/swipeview
         [RelayCommand]
-        public void DeleteManualTaskById(int Id)
+        async Task DeleteManualTaskById(int Id)
         {
-            Debug.WriteLine("Please Implement the Part to Delete he Manual Task: check whether DataBinding worked");
+            // https://social.msdn.microsoft.com/Forums/en-US/7f19554f-77fb-41e8-8723-96e0ac7b189e/how-to-use-displayalert-from-a-viewmodel-without-additional-frameworks?forum=xamarinforms
+            if (await Application.Current.MainPage.DisplayAlert("Warning", "Do you want to permanently delete?", "Yes", "No"))
+            {
+                List<ManualTask> updateManualTasks = ManualTasks.Where(e => e.Id != Id).ToList<ManualTask>();
+                ManualTasks.Clear();
+                foreach (var manualTask in updateManualTasks)
+                {
+                    ManualTasks.Add(manualTask);
+                }
+            }  
         }
 
         [RelayCommand]
