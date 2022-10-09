@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdnWorkLog", "AdnWorkLog\AdnWorkLog.csproj", "{46E011BB-7B96-4A52-AF3D-68D3C85E4F76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdnWorkLog.Test", "AdnWorkLog.Test\AdnWorkLog.Test.csproj", "{464544AF-C3FA-4B4D-AFB9-94092123B1EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{46E011BB-7B96-4A52-AF3D-68D3C85E4F76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46E011BB-7B96-4A52-AF3D-68D3C85E4F76}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46E011BB-7B96-4A52-AF3D-68D3C85E4F76}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{464544AF-C3FA-4B4D-AFB9-94092123B1EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{464544AF-C3FA-4B4D-AFB9-94092123B1EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{464544AF-C3FA-4B4D-AFB9-94092123B1EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{464544AF-C3FA-4B4D-AFB9-94092123B1EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
