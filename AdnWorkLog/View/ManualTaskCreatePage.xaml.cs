@@ -14,8 +14,13 @@ public partial class ManualTaskCreatePage : ContentPage
 		// Maybe create the related database here as well
 		//await DisplayAlert("Future Dev Plan", "Please Navigate to the detailed page", "Ok");
 
-		// TODO: Please Implement the method to create a new table with new Id in the database
+		// TODO: Please Implement the method to create a new table with new Id in the databasetry{try{
 		
+        int result = await App.ManualTaskRepo.AddNewManualTask(TitleEntry.Text);
+		if(result == -1)
+		{
+			await DisplayAlert("Error", App.ManualTaskRepo.StatusMessage, "ok");
+		}
 		int Id = _random.Next(1, 10);
 		await Shell.Current.GoToAsync($"{nameof(DetailManualLog)}?Id={Id}");
 	}

@@ -1,4 +1,5 @@
-﻿using AdnWorkLog.View;
+﻿using AdnWorkLog.Services;
+using AdnWorkLog.View;
 using AdnWorkLog.ViewModel;
 using CommunityToolkit.Maui;
 
@@ -25,6 +26,9 @@ public static class MauiProgram
 		builder.Services.AddTransient<DetailManualLog>();
 		builder.Services.AddTransient<MessageDetailViewModel>();
 		builder.Services.AddTransient<MessageDetailPage>();
+
+		string dbPath = FileAccessHelper.GetLocalFilePath("ManualTasks.db3");
+		builder.Services.AddSingleton<ManualTaskRepository>(s => ActivatorUtilities.CreateInstance<ManualTaskRepository>(s, dbPath));
 
         return builder.Build();
 	}

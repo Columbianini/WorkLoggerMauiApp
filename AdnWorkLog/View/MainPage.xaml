@@ -9,7 +9,7 @@
     <ScrollView Margin="10">
         <RefreshView>
             <Grid RowDefinitions="40, *" RowSpacing="10">
-                <Button Grid.Row="0" Text="Create New Task"/>
+                <Button Grid.Row="0" Text="Create New Task" Command="{Binding GetAllManualTasksCommand}" IsEnabled="{Binding IsNotRefreshing}"/>
                 <CollectionView Grid.Row="1" ItemsSource="{Binding ManualTasks}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:ManualTask">

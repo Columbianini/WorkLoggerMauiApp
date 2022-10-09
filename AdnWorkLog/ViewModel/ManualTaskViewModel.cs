@@ -16,20 +16,55 @@ namespace AdnWorkLog.ViewModel
 {
     public partial class ManualTaskViewModel: ObservableObject
     {
-        public ObservableCollection<ManualTask> ManualTasks { get; set; }
+        public ObservableCollection<ManualTask> ManualTasks { get; set; } = new();
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(IsNotRefreshing))]
+        bool isRefreshing;
+
+        public bool IsNotRefreshing => !isRefreshing;
+
+
 
         public ManualTaskViewModel()
         {
-            ManualTasks = new ObservableCollection<ManualTask>
+            isRefreshing = false;
+        }
+
+
+        [RelayCommand]
+        async Task GetAllManualTasks()
+        {
+
+
+            if (!isRefreshing)
             {
-                new ManualTask(1, "Write Code", new DateTime(2022, 10, 8, 21, 26, 0)),
-                new ManualTask(2, "Write Code", new DateTime(2022, 10, 8, 22, 26, 0)),
-                new ManualTask(3, "Write Code", new DateTime(2022, 10, 8, 21, 26, 0)),
-                new ManualTask(4, "Write Code", new DateTime(2022, 10, 7, 21, 2, 0)),
-                new ManualTask(5, "Write Code", new DateTime(2022, 10, 8, 21, 6, 0)),
-                new ManualTask(6, "Write Code", new DateTime(2022, 10, 8, 1, 26, 0)),
-                new ManualTask(7, "Write Code", new DateTime(2022, 1, 8, 21, 26, 0)),
-            };
+                try
+                {
+                    isRefreshing = true;
+                    List<ManualTask> manualTasksFromDb = await App.ManualTaskRepo.GetAllManualTasks();
+                    if (ManualTasks.Count > 0)
+                    {
+                        ManualTasks.Clear();
+                    }
+                    foreach (var manualTask in manualTasksFromDb)
+                    {
+                        ManualTasks.Add(manualTask);
+                    }
+                    if (ManualTasks.Count == 0)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Warning", App.ManualTaskRepo.StatusMessage, "Ok");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", $"Fail to Get Manual Tasks From Db: {ex.Message}", "Ok");
+                }
+                finally
+                {
+                    isRefreshing = false;
+                }        
+            }
         }
 
         // TODO: Add a SwipeView with Delete/Edit button https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/swipeview
@@ -44,6 +79,12 @@ namespace AdnWorkLog.ViewModel
                 foreach (var manualTask in updateManualTasks)
                 {
                     ManualTasks.Add(manualTask);
+                }
+
+                int result = await App.ManualTaskRepo.DeleteManualTask(Id);
+                if (result == -1)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", App.ManualTaskRepo.StatusMessage, "Ok");
                 }
             }  
         }
