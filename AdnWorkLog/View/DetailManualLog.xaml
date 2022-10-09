@@ -23,6 +23,12 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ManualLogMessage">
                         <Grid ColumnDefinitions="1*,5*">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DetailViewModel}}, Path=CheckDetailsCommand}"
+                                    CommandParameter="{Binding .}"
+                                    />
+                            </Grid.GestureRecognizers>
                             <Label Grid.Column="0" Text="{Binding Created, StringFormat='{hh\\:mm\\:ss}'}" TextColor="Red"/>
                             <Label Grid.Column="1" Text="{Binding Message}" LineBreakMode="TailTruncation"/>
                         </Grid>

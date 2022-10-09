@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AdnWorkLog.Model;
 using CommunityToolkit.Mvvm.Input;
+using AdnWorkLog.View;
 
 namespace AdnWorkLog.ViewModel
 {
@@ -40,6 +41,15 @@ namespace AdnWorkLog.ViewModel
         public void AddMessage(string message)
         {
             ManualLogMessageList.Add(new ManualLogMessage(DateTime.Now, message));
+        }
+
+        [RelayCommand]
+        async Task CheckDetails(ManualLogMessage message)
+        {
+            await Shell.Current.GoToAsync(nameof(MessageDetailPage), true, new Dictionary<string, object>()
+            {
+                {"Message", message }
+            });
         }
     }
 }

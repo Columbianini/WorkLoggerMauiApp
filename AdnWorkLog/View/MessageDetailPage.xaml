@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:AdnWorkLog.Model"
+             xmlns:viewmodel="clr-namespace:AdnWorkLog.ViewModel"
+             x:DataType="viewmodel:MessageDetailViewModel"
+             x:Class="AdnWorkLog.View.MessageDetailPage"
+             Title="MessageDetailPage">
+    <VerticalStackLayout HorizontalOptions="Start" Spacing="20">
+        <Grid ColumnDefinitions="1*,5*" RowDefinitions="1*,5*" RowSpacing="20"  Margin="10">
+            <Label Grid.Row="0" Grid.Column="0" Text="Created:"/>
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding CurrentLogMessage.Created}"/>
+            <Label Grid.Row="1" Grid.Column="0" Text="Content"/>
+            <Editor Grid.Row="1" Grid.Column="1" IsReadOnly="True" Text="{Binding CurrentLogMessage.Message}"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

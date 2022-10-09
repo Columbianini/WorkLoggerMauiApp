@@ -23,6 +23,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddTransient<DetailViewModel>();
 		builder.Services.AddTransient<DetailManualLog>();
+		builder.Services.AddTransient<MessageDetailViewModel>();
+		builder.Services.AddTransient<MessageDetailPage>();
 
         return builder.Build();
 	}
