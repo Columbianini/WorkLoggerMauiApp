@@ -1,5 +1,6 @@
 ﻿using AdnWorkLog.View;
 using AdnWorkLog.ViewModel;
+using CommunityToolkit.Maui;
 
 namespace AdnWorkLog;
 
@@ -10,6 +11,7 @@ public static class MauiProgram
 		var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
+			.UseMauiCommunityToolkit()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -19,6 +21,8 @@ public static class MauiProgram
 		
 		builder.Services.AddSingleton<ManualTaskViewModel>();
         builder.Services.AddSingleton<MainPage>();
+		builder.Services.AddTransient<DetailViewModel>();
+		builder.Services.AddTransient<DetailManualLog>();
 
         return builder.Build();
 	}
