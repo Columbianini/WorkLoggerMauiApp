@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:AdnWorkLog.Model"
+             xmlns:viewmodel="clr-namespace:AdnWorkLog.ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:DetailViewModel"
+             x:Class="AdnWorkLog.View.DetailManualLog"
+             Title="{Binding Id, StringFormat=Log {0}}">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Entry x:Name="LogEntry" Placeholder="Please Enter the log Here 💖">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior 
+                        EventName="Completed"
+                        Command="{Binding AddMessageCommand}"
+                        CommandParameter="{Binding Source={x:Reference LogEntry}, Path=Text}" 
+                        />
+                </Entry.Behaviors>
+            </Entry>
+            <CollectionView ItemsSource="{Binding ManualLogMessageList}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:ManualLogMessage">
+                        <Grid ColumnDefinitions="1*,5*">
+                            <Label Grid.Column="0" Text="{Binding Created, StringFormat='{hh\\:mm\\:ss}'}" TextColor="Red"/>
+                            <Label Grid.Column="1" Text="{Binding Message}" LineBreakMode="TailTruncation"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>
