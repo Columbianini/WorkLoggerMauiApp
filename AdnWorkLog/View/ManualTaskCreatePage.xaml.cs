@@ -2,7 +2,6 @@ namespace AdnWorkLog.View;
 
 public partial class ManualTaskCreatePage : ContentPage
 {
-	static Random _random = new();
 	public ManualTaskCreatePage()
 	{
 		InitializeComponent();
@@ -21,8 +20,10 @@ public partial class ManualTaskCreatePage : ContentPage
 		{
 			await DisplayAlert("Error", App.ManualTaskRepo.StatusMessage, "ok");
 		}
-		int Id = _random.Next(1, 10);
-		await Shell.Current.GoToAsync($"{nameof(DetailManualLog)}?Id={Id}");
+		else
+		{
+            await Shell.Current.GoToAsync($"{nameof(DetailManualLog)}?Id={result}");
+        }
 	}
 
 	private void OnNoClicked(object sender, EventArgs e)

@@ -18,15 +18,13 @@ namespace AdnWorkLog.ViewModel
         [NotifyPropertyChangedFor(nameof(ManualLogMessageList))]
         int id;
 
-        partial void OnIdChanged(int value)
+        async partial void OnIdChanged(int value)
         {
             if (ManualLogMessageList.Count > 0)
             {
                 ManualLogMessageList.Clear();
             }
-
-            ManualLogMessageList.Add(new ManualLogMessage(new DateTime(2001, 1, 1, 10, 0, 0), $"Wake up {value}"));
-            ManualLogMessageList.Add(new ManualLogMessage(new DateTime(2001, 1, 2, 11, 0, 0), $"Lunch Break {value}"));
+            await RefreshLogMessageList();
         }
 
 
@@ -38,9 +36,18 @@ namespace AdnWorkLog.ViewModel
         }
 
         [RelayCommand]
-        public void AddMessage(string message)
+        public async Task AddMessage(string message)
         {
-            ManualLogMessageList.Add(new ManualLogMessage(DateTime.Now, message));
+           int result = await App.ManualLogMessageRepo.AddNewLogMessage(message);
+           if(result == -1)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", App.ManualLogMessageRepo.StatusMessage, "Ok");
+            }
+            else
+            {
+                await RefreshLogMessageList();
+            }
+
         }
 
         [RelayCommand]
@@ -51,5 +58,21 @@ namespace AdnWorkLog.ViewModel
                 {"Message", message }
             });
         }
+
+
+        [RelayCommand]
+        async Task RefreshLogMessageList()
+        {
+            List<ManualLogMessage> logMessageListFromDb = await App.ManualLogMessageRepo.GetLogMessagesById(id);
+            if (ManualLogMessageList.Count > 0)
+            {
+                ManualLogMessageList.Clear();
+            }
+            foreach (var logMessage in logMessageListFromDb)
+            {
+                ManualLogMessageList.Add(logMessage);
+            }
+        }
+
     }
 }

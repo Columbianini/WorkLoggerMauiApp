@@ -92,6 +92,7 @@ namespace AdnWorkLog.ViewModel
         [RelayCommand]
         async Task CheckManualTaskById(int Id)
         {
+            // TODO: Here the Id is actually TitleId, please Refactor the code later
             await Shell.Current.GoToAsync($"{nameof(DetailManualLog)}?Id={Id}");
         }
 
