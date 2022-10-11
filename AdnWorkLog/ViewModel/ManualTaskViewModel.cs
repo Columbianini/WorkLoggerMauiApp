@@ -1,6 +1,5 @@
 ﻿using AdnWorkLog.Model;
 using AdnWorkLog.View;
-//using Android.OS;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -19,52 +18,37 @@ namespace AdnWorkLog.ViewModel
         public ObservableCollection<ManualTask> ManualTasks { get; set; } = new();
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsNotRefreshing))]
         bool isRefreshing;
 
-        public bool IsNotRefreshing => !isRefreshing;
-
-
-
-        public ManualTaskViewModel()
-        {
-            isRefreshing = false;
-        }
 
 
         [RelayCommand]
         async Task GetAllManualTasks()
         {
-
-
-            if (!isRefreshing)
+            try
             {
-                try
+                List<ManualTask> manualTasksFromDb = await App.ManualTaskRepo.GetAllManualTasks();
+                if (ManualTasks.Count > 0)
                 {
-                    isRefreshing = true;
-                    List<ManualTask> manualTasksFromDb = await App.ManualTaskRepo.GetAllManualTasks();
-                    if (ManualTasks.Count > 0)
-                    {
-                        ManualTasks.Clear();
-                    }
-                    foreach (var manualTask in manualTasksFromDb)
-                    {
-                        ManualTasks.Add(manualTask);
-                    }
-                    if (ManualTasks.Count == 0)
-                    {
-                        await App.Current.MainPage.DisplayAlert("Warning", App.ManualTaskRepo.StatusMessage, "Ok");
-                    }
+                    ManualTasks.Clear();
                 }
-                catch(Exception ex)
+                foreach (var manualTask in manualTasksFromDb)
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", $"Fail to Get Manual Tasks From Db: {ex.Message}", "Ok");
+                    ManualTasks.Add(manualTask);
                 }
-                finally
+                if (ManualTasks.Count == 0)
                 {
-                    isRefreshing = false;
-                }        
+                    await App.Current.MainPage.DisplayAlert("Warning", App.ManualTaskRepo.StatusMessage, "Ok");
+                }
             }
+            catch(Exception ex)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", $"Fail to Get Manual Tasks From Db: {ex.Message}", "Ok");
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }        
         }
 
         // TODO: Add a SwipeView with Delete/Edit button https://learn.microsoft.com/en-us/dotnet/maui/user-interface/controls/swipeview
