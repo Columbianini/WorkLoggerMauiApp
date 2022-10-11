@@ -22,7 +22,7 @@
             <CollectionView ItemsSource="{Binding ManualLogMessageList}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ManualLogMessage">
-                        <Grid ColumnDefinitions="1*,5*">
+                        <Grid ColumnDefinitions="2*,1*">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer 
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DetailViewModel}}, Path=CheckDetailsCommand}"
