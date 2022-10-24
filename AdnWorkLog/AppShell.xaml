@@ -6,16 +6,29 @@
     xmlns:view="clr-namespace:AdnWorkLog.View"
     >
 
-    <ShellContent
+    <!--<ShellContent
         Title="Home"
+        Icon="home.png"
         ContentTemplate="{DataTemplate view:MainPage}"
         Route="MainPage" />
 
     <ShellContent
-        Title="CreateTask"
+        Title="Create"
+        Icon="checklist.png"
         ContentTemplate="{DataTemplate view:ManualTaskCreatePage}"
-        Route="CreatePage" />
-    
-    
+        Route="CreatePage" />-->
+
+    <TabBar>
+        <Tab Title="Home"
+            Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate view:MainPage}" />
+        </Tab>
+        <Tab Title="Create"
+            Icon="checklist.png">
+            <ShellContent ContentTemplate="{DataTemplate view:ManualTaskCreatePage}" />
+        </Tab>
+    </TabBar>
+
+
 
 </Shell>
