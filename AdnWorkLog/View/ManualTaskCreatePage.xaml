@@ -2,10 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AdnWorkLog.View.ManualTaskCreatePage"
-             Title="ManualTaskCreatePage">
+             Title="New Task">
     <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="50" Margin="10">
         <Label Text="Welcome to Create New Task" HorizontalOptions="Center"/>
-        <Entry x:Name="TitleEntry" Placeholder="Please Enter your New Task Name Here ❤"/>
+        <VerticalStackLayout>
+            <Entry x:Name="TitleEntry" Placeholder="Please Enter your New Task Name Here ❤"/>
+            <BoxView Color="Gray"
+             HeightRequest="2"
+             HorizontalOptions="Fill" />
+        </VerticalStackLayout>
         <Grid ColumnDefinitions="1*,1*" ColumnSpacing="10">
             <Button Grid.Column="0" Text="Yes" Clicked="OnYesClicked" />
             <Button Grid.Column="1" Text="No" Clicked="OnNoClicked" />
