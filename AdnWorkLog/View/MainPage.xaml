@@ -5,37 +5,43 @@
              xmlns:viewmodel="clr-namespace:AdnWorkLog.ViewModel"
              x:DataType="viewmodel:ManualTaskViewModel"
              x:Class="AdnWorkLog.View.MainPage"
-             Title="Work Loggers">
+             Title="Home">
 
-    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding GetAllManualTasksCommand}">
-        <ScrollView Margin="10">
-            <CollectionView Grid.Row="1" ItemsSource="{Binding ManualTasks}">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding GetAllManualTasksCommand}" Margin="10">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding ManualTasks}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical"
+                           ItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:ManualTask">
                             <SwipeView>
                                 <SwipeView.RightItems>
                                     <SwipeItems>
-                                        <SwipeItem Text="Delete"
-                                                   BackgroundColor="LightYellow"
-                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=DeleteManualTaskByIdCommand}"
-                                                   CommandParameter="{Binding Id}" />
+                                        <SwipeItem  Text="Delete"
+                                                    IconImageSource="delete.png"
+                                                    BackgroundColor="LightYellow"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=DeleteManualTaskByIdCommand}"
+                                                    CommandParameter="{Binding Id}" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>
-                                <Grid ColumnDefinitions="1*,3*">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=CheckManualTaskByIdCommand}"
-                                            CommandParameter="{Binding Id}"
-                                            />
-                                    </Grid.GestureRecognizers>
-                                    <Label Grid.Column="0" Text="{Binding Created, StringFormat='{0:MMMM dd, yyyy hh\\:mm}'}" HorizontalOptions="Start"/>
-                                    <Label Grid.Column="1" Text="{Binding Name}" HorizontalOptions="Center"/>
-                                </Grid>
+                                <Frame BorderColor="Blue" CornerRadius="10">
+                                    <Grid ColumnDefinitions="1*,3*" RowDefinitions="1*,1*">
+                                        <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ManualTaskViewModel}}, Path=CheckManualTaskByIdCommand}"
+                                                            CommandParameter="{Binding Id}"
+                                                            />
+                                            </Grid.GestureRecognizers>
+                                            <Label Grid.Column="0" Grid.Row="0" Text="{Binding Created, StringFormat='{0:ddd}'}"/>
+                                            <Label Grid.Column="0" Grid.Row="1" Text="{Binding Created, StringFormat='{0:MM/dd}'}"/>
+                                            <Label Grid.Column="1" Grid.RowSpan="2" Text="{Binding Name}" HorizontalOptions="Center"/>
+                                    </Grid>
+                                </Frame>
                             </SwipeView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
-        </ScrollView>
     </RefreshView>
 
 </ContentPage>
