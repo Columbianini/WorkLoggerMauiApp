@@ -100,5 +100,30 @@ namespace AdnWorkLog.Services
             return allManualTasks;
         }
 
+
+        public async Task<string> GetTitleById(int id)
+        {
+            string title = "";
+            try
+            {
+                await Init();
+                var queryObj = await conn.Table<ManualTask>().Where(t=>t.Id==id).FirstOrDefaultAsync();
+                title = queryObj.Name;
+                if (title != "")
+                {
+                    StatusMessage = $"Successfully get queryed object #{id}";
+                }
+                else
+                {
+                    StatusMessage = "No title for the Task. Recommend to be deleted";
+                }
+            }
+            catch(Exception ex)
+            {
+                StatusMessage = $"Failed to get title from Id #{id}: {ex.Message}";
+            }
+            return title;
+        }
+
     }
 }
