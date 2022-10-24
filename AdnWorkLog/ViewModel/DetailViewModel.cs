@@ -18,6 +18,9 @@ namespace AdnWorkLog.ViewModel
         [NotifyPropertyChangedFor(nameof(ManualLogMessageList))]
         int id;
 
+        [ObservableProperty]
+        string titleFromTitleId;
+
         async partial void OnIdChanged(int value)
         {
             if (ManualLogMessageList.Count > 0)
@@ -25,6 +28,7 @@ namespace AdnWorkLog.ViewModel
                 ManualLogMessageList.Clear();
             }
             await RefreshLogMessageList();
+            await RefreshTitleFromId();
         }
 
 
@@ -36,8 +40,9 @@ namespace AdnWorkLog.ViewModel
         }
 
         [RelayCommand]
-        public async Task AddMessage(string message)
+        public async Task AddMessage(IEntry entry)
         {
+           string message = entry.Text;
            int result = await App.ManualLogMessageRepo.AddNewLogMessage(message);
            if(result == -1)
             {
@@ -46,6 +51,7 @@ namespace AdnWorkLog.ViewModel
             else
             {
                 await RefreshLogMessageList();
+                entry.Text = "";
             }
 
         }
@@ -72,6 +78,11 @@ namespace AdnWorkLog.ViewModel
             {
                 ManualLogMessageList.Add(logMessage);
             }
+        }
+
+        async Task RefreshTitleFromId()
+        {
+            this.TitleFromTitleId = await App.ManualTaskRepo.GetTitleById(this.Id);
         }
 
     }

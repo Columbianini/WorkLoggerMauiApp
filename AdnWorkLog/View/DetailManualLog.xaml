@@ -6,20 +6,28 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:DetailViewModel"
              x:Class="AdnWorkLog.View.DetailManualLog"
-             Title="{Binding Id, StringFormat=Log {0}}">
+             Title="{Binding TitleFromTitleId}">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <Entry x:Name="LogEntry" Placeholder="Please Enter the log Here 💖">
-                <Entry.Behaviors>
-                    <toolkit:EventToCommandBehavior 
-                        EventName="Completed"
-                        Command="{Binding AddMessageCommand}"
-                        CommandParameter="{Binding Source={x:Reference LogEntry}, Path=Text}" 
-                        />
-                </Entry.Behaviors>
-            </Entry>
+        <VerticalStackLayout Spacing="20" Margin="10">
+            <VerticalStackLayout>
+                <Entry x:Name="LogEntry" Placeholder="Please Enter the log Here 💖">
+                    <Entry.Behaviors>
+                        <toolkit:EventToCommandBehavior 
+                            EventName="Completed"
+                            Command="{Binding AddMessageCommand}"
+                            CommandParameter="{Binding Source={x:Reference LogEntry}}" 
+                            />
+                    </Entry.Behaviors>
+                </Entry>
+                <BoxView Color="Blue"
+                     HeightRequest="2"
+                     HorizontalOptions="Fill" />
+            </VerticalStackLayout>
+            
             <CollectionView ItemsSource="{Binding ManualLogMessageList}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="10" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:ManualLogMessage">
                         <Grid ColumnDefinitions="2*,1*">
@@ -36,6 +44,5 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
-    </ScrollView>
     
 </ContentPage>
